@@ -2,3 +2,7 @@
 *.pyc
 *.pid
 *.err
+CS410/
+__pycache__/
+.pytest_cache/
+log/
