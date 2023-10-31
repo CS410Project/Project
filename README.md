@@ -1,5 +1,5 @@
 # Project
-Project Proposal: project_proposal.pdf
+Project Proposal: [PDF](https://github.com/CS410Project/Project/blob/main/project_proposal.pdf)
 
 # Install and Run
 ## Installation
