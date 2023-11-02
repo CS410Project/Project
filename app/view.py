@@ -79,10 +79,10 @@ def post_data():
 
 
 # A simple GET route simulating user hit video play button
-@app.route('/play/<int:video_id>', methods=['GET'])
-def play_video(video_id):
+@app.route('/play/<str:video_id>', methods=['GET'])
+def play_video(video_id:str):
     timestamp = datetime.now().strftime('%Y-%m-%d %H:00:00')
-    video_cache_partitions[timestamp][str(video_id)] += 1
+    video_cache_partitions[timestamp][video_id] += 1
 
 
 # TODO: define a simple GET route to return video play count for a given time lapse
@@ -94,6 +94,12 @@ def get_video_play_count():
     if not start_time or not end_time:
         return jsonify({'error': 'Invalid start_time or end_time'}), 400
     raise NotImplementedError("TODO: implement this route")
+
+
+# fetch video cache partions
+@app.route('/video_cache', methods=['GET'])
+def get_video_cache():
+    return jsonify(video_cache_partitions)
 
 
 # clear global cache resetting video play count
