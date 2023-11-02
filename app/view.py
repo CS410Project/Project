@@ -79,10 +79,10 @@ def post_data():
 
 
 # A simple GET route simulating user hit video play button
-@app.route('/play/<str:video_id>', methods=['GET'])
-def play_video(video_id:str):
+@app.route('/play/<int:video_id>', methods=['GET'])
+def play_video(video_id:int):
     timestamp = datetime.now().strftime('%Y-%m-%d %H:00:00')
-    video_cache_partitions[timestamp][video_id] += 1
+    video_cache_partitions[timestamp][str(video_id)] += 1
 
 
 # TODO: define a simple GET route to return video play count for a given time lapse
