@@ -5,6 +5,7 @@ class MapReduceWorker:
     def __init__(self) -> None:
         self.mapper_output = defaultdict(list)
         self.output = defaultdict(int)
+        self.k = 10
 
     def map_reduce(self, video_cache_partitions):
         # Map
