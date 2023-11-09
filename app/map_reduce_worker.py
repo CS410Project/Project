@@ -1,44 +1,59 @@
-from multiprocessing import Pool
 from collections import defaultdict
+import threading
 
 class MapReduceWorker:
     def __init__(self) -> None:
         self.mapper_output = defaultdict(list)
         self.output = defaultdict(int)
 
-    def configure_args(self):
-        super(MapReduceWorker, self).configure_args()
-        self.add_passthru_arg('--k', type=int, help='Number of top hitters to find')
-
     def map_reduce(self, video_cache_partitions):
         # Map
         # Parse the input dictionary into (key, video_cache) pairs for each cache partition
         key_value = defaultdict(list)
         time_keys = video_cache_partitions.keys()
-        mappool =  Pool(len(time_keys))
+
+        # Create a list to store threads
+        mapper_threads = []
+
         for key in time_keys:
             video_cache = video_cache_partitions[key]
-            # parallel mapper
-            mappool.map(self.mapper, video_cache)
-        mappool.close() 
-        mappool.join()# map finish
+            # Create a thread for each mapper task
+            thread = threading.Thread(target=self.mapper, args=(video_cache,))
+            mapper_threads.append(thread)
+            thread.start()
+
+        # Wait for all mapper threads to finish
+        for thread in mapper_threads:
+            thread.join()
+
         # Reduce
-        reducepool = Pool(len(self.mapper_output.keys()))
+        # Create a list to store threads
+        reducer_threads = []
+
         for video_id in self.mapper_output.keys():
-            # parallel reduce
-            reducepool.map(self.reduce, video_id)
-        reducepool.close()
-        reducepool.join()# reduce finish
-        return 
+            # Create a thread for each reducer task
+            thread = threading.Thread(target=self.reduce, args=(video_id,))
+            reducer_threads.append(thread)
+            thread.start()
+
+        # Wait for all reducer threads to finish
+        for thread in reducer_threads:
+            thread.join()
+
+        # Get the top-k hitters
+        top_k_hitters = self.get_top_k_hitters(self.output, self.k)
+        return top_k_hitters
     
     def mapper(self, video_cache):
-        # Add hit count at certain time for video_id 
+        # Add hit count at a certain time for video_id
         for video_id, hit_count in video_cache.items():
             self.mapper_output[video_id].append(hit_count)
-        return 
-    
+
     def reduce(self, video_id):
         # Sum hit count for video_id
         self.output[video_id] = sum(self.mapper_output[video_id])
-        return
 
+    def get_top_k_hitters(self, data, k):
+        # Sort the data by hit count in descending order and get the top-k hitters
+        sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)
+        return sorted_data[:k]
