@@ -1,13 +1,14 @@
 from collections import defaultdict
 import threading
+from typing import Dict
 
 class MapReduceWorker:
-    def __init__(self) -> None:
+    def __init__(self, k) -> None:
         self.mapper_output = defaultdict(list)
         self.output = defaultdict(int)
-        self.k = 10
+        self.k = k
 
-    def map_reduce(self, video_cache_partitions):
+    def map_reduce(self, video_cache_partitions: Dict[str, Dict[str, int]]):
         # Map
         # Parse the input dictionary into (key, video_cache) pairs for each cache partition
         key_value = defaultdict(list)
