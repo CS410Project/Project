@@ -81,19 +81,33 @@ def post_data():
 # A simple GET route simulating user hit video play button
 @app.route('/play/<int:video_id>', methods=['GET'])
 def play_video(video_id:int):
-    timestamp = datetime.now().strftime('%Y-%m-%d %H:00:00')
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:00')
     video_cache_partitions[timestamp][str(video_id)] += 1
+    return jsonify({'message': f'Opened video {video_id} at {timestamp}'})
 
 
 # TODO: define a simple GET route to return video play count for a given time lapse
 # Usage: curl http://localhost:5000/play_count?start_time=2020-01-01%2000:00:00&end_time=2020-01-01%2012:00:00
 @app.route('/play_count', methods=['GET'])
 def get_video_play_count():
-    start_time = request.args.get('start_time')
-    end_time = request.args.get('end_time')
-    if not start_time or not end_time:
-        return jsonify({'error': 'Invalid start_time or end_time'}), 400
-    raise NotImplementedError("TODO: implement this route")
+    start_time = request.args.get(
+        'start_time',
+        min(video_cache_partitions.keys()),
+    )
+    end_time = request.args.get(
+        'end_time',
+        max(video_cache_partitions.keys()),
+    )
+    if start_time > end_time:
+        start_time, end_time = end_time, start_time
+
+    video_play_count = defaultdict(int)
+    for timestamp in video_cache_partitions.keys():
+        if start_time <= timestamp <= end_time:
+            for video_id, count in video_cache_partitions[timestamp].items():
+                video_play_count[video_id] += count
+
+    return jsonify({'message': f'Video play count from {start_time} to {end_time} is {video_play_count}'})
 
 
 # fetch video cache partions
