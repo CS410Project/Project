@@ -1,7 +1,8 @@
-from collections import defaultdict
-import threading
-from typing import Dict
 import logging
+import threading
+
+from collections import defaultdict
+from typing import Dict
 
 
 class MapReduceWorker:
@@ -10,7 +11,6 @@ class MapReduceWorker:
         self.output = defaultdict(int)
         self.k = k
         self.lock = threading.Lock()
-        
 
     def map_reduce(self, video_cache_partitions: Dict[str, Dict[str, int]]):
             try:
@@ -51,7 +51,6 @@ class MapReduceWorker:
                 logging.error(f"An error occurred in map_reduce: {e}")
                 raise
 
-    
     def mapper(self, video_cache):
         try:
             # Create a local output for each mapper

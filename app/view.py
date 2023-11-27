@@ -29,6 +29,14 @@ video_cache: Dict[str, int] = defaultdict(int)
 # }
 video_cache_partitions: Dict[str, Dict[str, int]] = defaultdict(lambda: defaultdict(int))
 
+# All-time top-k hitters
+# {
+#   "video_url_1": 1,
+#   "video_url_2": 2,
+#   ....
+# }
+top_k_hitters = defaultdict(int)
+
 
 @app.route('/')
 def root_url():
@@ -81,13 +89,13 @@ def post_data():
 # A simple GET route simulating user hit video play button
 @app.route('/play/<int:video_id>', methods=['GET'])
 def play_video(video_id:int):
-    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:00')
+    timestamp = datetime.now().strftime('%Y-%m-%dT%H:%M:00')
     video_cache_partitions[timestamp][str(video_id)] += 1
     return jsonify({'message': f'Opened video {video_id} at {timestamp}'})
 
 
 # TODO: define a simple GET route to return video play count for a given time lapse
-# Usage: curl http://localhost:5000/play_count?start_time=2020-01-01%2000:00:00&end_time=2020-01-01%2012:00:00
+# Usage: curl http://localhost:5000/play_count?start_time=2020-01-01T00:00:00&end_time=2020-01-01T12:00:00
 @app.route('/play_count', methods=['GET'])
 def get_video_play_count():
     start_time = request.args.get(
@@ -114,6 +122,38 @@ def get_video_play_count():
 @app.route('/video_cache', methods=['GET'])
 def get_video_cache():
     return jsonify(video_cache_partitions)
+
+
+# fetch video cache partitions for a given time range
+@app.route('/video_cache/<string:start_time>/<string:end_time>', methods=['GET'])
+def get_video_cache_by_time_range(start_time, end_time):
+    if not start_time:
+        start_time = min(video_cache_partitions.keys())
+    if not end_time:
+        end_time = max(video_cache_partitions.keys())
+    if start_time > end_time:
+        start_time, end_time = end_time, start_time
+
+    video_cache_by_time_range = defaultdict(lambda: defaultdict(int))
+    for timestamp in video_cache_partitions.keys():
+        if start_time <= timestamp <= end_time:
+            video_cache_by_time_range[timestamp] = video_cache_partitions[timestamp]
+
+    return jsonify(video_cache_by_time_range)
+
+
+# get top-k hitters
+@app.route('/top_k_hitters', methods=['GET'])
+def get_top_k_hitters():
+    return jsonify(top_k_hitters)
+
+
+# update top-k hitters
+@app.route('/top_k_hitters', methods=['POST'])
+def update_top_k_hitters():
+    global top_k_hitters
+    top_k_hitters = request.get_json()
+    return jsonify({'message': 'Top-k hitters updated'})
 
 
 # clear global cache resetting video play count
