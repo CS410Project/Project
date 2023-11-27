@@ -5,7 +5,7 @@ import random
 from querier import SimpleVideoPlatformQuerier
 
 class UserTraffic:
-   def __init__(self, num_calls=10000) -> None:
+   def __init__(self, num_calls=1000) -> None:
       self.lock = threading.Lock()
       self.querier = SimpleVideoPlatformQuerier()
       self.base_url = "play/"

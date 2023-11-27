@@ -44,7 +44,7 @@ class UnifiedWorker:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
-    unified_worker = UnifiedWorker(k=10, num_calls=10000)
+    unified_worker = UnifiedWorker(k=10, num_calls=1000)
     # run pipeline every minute
     while True:
         unified_worker.run_pipeline()
