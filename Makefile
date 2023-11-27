@@ -27,11 +27,12 @@ debug: install
 # Target: deploy - Run the Flask application with Gunicorn daemonized and the unified worker
 run: install
 	$(GUNICORN) -c gunicorn.py $(WSGI_APP) -D
-	$(VENV_PYTHON) app/unified_worker.py
+	nohup $(VENV_PYTHON) app/unified_worker.py > log/unified_worker.log &
 
-# Target: stop - Stop the Flask application daemon
+# Target: stop - Stop the Flask application daemon and the unified worker
 stop:
 	pkill -f gun
+	pkill -f unified_worker
 
 # Target: clean - Remove the virtual environment
 clean:
