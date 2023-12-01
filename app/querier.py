@@ -4,7 +4,7 @@ from typing import Dict
 
 class SimpleVideoPlatformQuerier:
     def __init__(self) -> None:
-        self.url = "http://localhost:5000"
+        self.url = "http://127.0.0.1:5000"
 
     def get(self, query_url:str, params=None):
         response = requests.get(
