@@ -29,33 +29,12 @@ Project Progress Report: https://github.com/CS410Project/Project/blob/main/Proje
 4. `unified_worker.log` is the log for the unified worker python script
 
 # Team Contribution 
-a.	Data feed
-    i.	Shuxian Xu - sx30
-    ii.	You Zhou - youzhou3
-b.	Data parsing
-    i.	Tianyu Zhou - aliang7
-    ii.	You Zhou - youzhou3
-c.	Platform construction
-    i.	Tianyi Zhang - tianyi18
-    ii.	Tianyu Zhou - aliang7
-d.	Map-reduce 
-    i.	Shuxian Xu - sx30
-    ii.	Tianyi Zhang - tianyi18
-    iii. Tianyu Zhou - aliang7
-    iv.	You Zhou - youzhou3
-e.	Result rendering
-    i.	Tianyi Zhang - tianyi18
-    ii.	Shuxian Xu - sx30
-f.	Documentation
-    i.	Shuxian Xu - sx30
-    ii.	Tianyi Zhang - tianyi18
-    iii. Tianyu Zhou - aliang7
-    iv.	You Zhou - youzhou3
-g.	Code Review
-    i.	Tianyi Zhang - tianyi18
-h.	Final Presentation 
-    i.	Shuxian Xu - sx30
-    ii.	Tianyi Zhang - tianyi18
-    iii. Tianyu Zhou - aliang7
-    iv.	You Zhou - youzhou3
+1. Data feed: Shuxian Xu - sx30; You Zhou - youzhou3
+2. Data parsing: Tianyu Zhou - aliang7; You Zhou - youzhou3
+3. Platform construction: Tianyi Zhang - tianyi18; Tianyu Zhou - aliang7
+4. Map-reduce: Shuxian Xu - sx30; Tianyi Zhang - tianyi18; Tianyu Zhou - aliang7; You Zhou - youzhou3
+5. Result rendering: Tianyi Zhang - tianyi18; Shuxian Xu - sx30
+6. Documentation: Shuxian Xu - sx30; Tianyi Zhang - tianyi18; Tianyu Zhou - aliang7; You Zhou - youzhou3
+7. Code Review: Tianyi Zhang - tianyi18
+8. Final Presentation: Shuxian Xu - sx30; Tianyi Zhang - tianyi18; Tianyu Zhou - aliang7; You Zhou - youzhou3
 
