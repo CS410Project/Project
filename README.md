@@ -2,7 +2,10 @@
 Project Proposal: [PDF](https://github.com/CS410Project/Project/blob/main/project_proposal.pdf)
 
 # Project Progress Report
-Project Progress Report: https://github.com/CS410Project/Project/blob/main/Project%20Progress%20Report.pdf
+Project Progress Report: [PDF](https://github.com/CS410Project/Project/blob/main/Project%20Progress%20Report.pdf)
+
+# Final Demo Presentation
+Link: https://drive.google.com/file/d/1gH58rDjA8objxKcTokFPamrokbgiblI7/view?usp=drive_link
 
 # Install and Run
 ## Installation
